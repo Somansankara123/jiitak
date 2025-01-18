@@ -3,7 +3,7 @@ import React from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 import Login from './components/Login';
-import Navbar from './components/NavBar';
+import Header from './components/Header';
 import ResetPassword from './components/ResetPassword';
 import UserList from './components/UserList';
 import Register from './components/Register';
@@ -14,7 +14,7 @@ import Winners from './components/Winners';
 import { Outlet } from 'react-router-dom';
 const Layout = () => (
   <>
-    <Navbar />
+    <Header />
     <div className="main-content">
       <Outlet /> 
     </div>

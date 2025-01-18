@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'; 
 
-const Navbar = () => {
+const Header = () => {
     const { loginResponse ,setLoginResponse} = useContext(UserContext)
     const navigate = useNavigate();
 
@@ -43,4 +43,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default Header
