@@ -9,7 +9,7 @@ import UserList from './components/UserList';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import ForgotPassword from './components/Forgotpassword';
-import Setting from './components/Setting';
+import Admin from './components/Admin';
 import Winners from './components/Winners';
 import { Outlet } from 'react-router-dom';
 const Layout = () => (
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       { path: "/userlist", element: <UserList /> },
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/forgotpassword", element: <ForgotPassword /> },
-      { path: "/settings", element: <Setting /> },
+      { path: "/admin", element: <Admin /> },
       { path: "/winners", element: <Winners /> },
     ]
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from './Sidebar'
 
-const Setting = () => {
+const Admin = () => {
   return (
     <div>
           <div className="grid grid-cols-12 grid-rows-1">
@@ -9,11 +9,11 @@ const Setting = () => {
           <Sidebar />
         </div>
         <div className="bg-[#F8F5F0] col-span-10">
-         
+         <h1>Not allowed here</h1>
         </div>
       </div>
     </div>
   )
 }
 
-export default Setting
+export default Admin

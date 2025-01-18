@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify'
+import React, {  useState } from 'react';
+import { Link, useLocation, } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'; 
-import { UserContext } from "../utils.js/UserContext";
+
 
 
 import item1 from "../Assests/Item1.svg";
@@ -11,10 +11,10 @@ import item3 from "../Assests/item3.svg";
 import item4 from "../Assests/item4.svg";
 
 const Sidebar = () => {
-  const { setLoginResponse } = useContext(UserContext);
+  
   const [activeLink, setActiveLink] = useState('');
   const location = useLocation();
-  const navigate = useNavigate();
+  
 
   React.useEffect(() => {
     
@@ -88,19 +88,19 @@ const Sidebar = () => {
             </li>
           </Link>
 
-          <Link to={'/settings'}>
+          <Link to={'/admin'}>
             <li
               className={`group w-full py-6 font-medium flex items-center ${
                 activeLink === '/settings'
                   ? 'bg-orange-200 text-orange-500'
                   : 'text-[#878480] hover:bg-orange-200'
               }`}
-              onClick={() => handleClick('/settings')}
+              onClick={() => handleClick('/admin')}
             >
               <img
                 src={item4}
-                alt="Settings"
-                className={`mr-2 px-2 ${activeLink === '/settings' ? 'text-orange-500' : 'group-hover:text-orange-500'}`}
+                alt="admin"
+                className={`mr-2 px-2 ${activeLink === '/admin' ? 'text-orange-500' : 'group-hover:text-orange-500'}`}
               />
               <span>運営管理者</span>
             </li>
