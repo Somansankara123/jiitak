@@ -1,147 +1,120 @@
 import React, { useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [isVisible, setIsVisible] = useState(false);
-  const [cpassIsVisible, setCpassIsVisible] = useState(false);
-  const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-
-  const navigate = useNavigate()
-
-  const validatePassword = (password) => {
-    
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-    return regex.test(password);
-  };
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handlePasswordChange = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
+    setIsPasswordValid(
+      !!value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/)
+    );
     setPassword(value);
-
-    if (!value) {
-      setPasswordError('Password is required.');
-    } else if (!validatePassword(value)) {
-      setPasswordError(
-        'Password must be at least 6 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.'
-      );
-    } else {
-      setPasswordError('');
-    }
   };
 
   const handleConfirmPasswordChange = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
+    setIsConfirmPasswordValid(value === password);
     setConfirmPassword(value);
-
-    if (value !== password) {
-      setConfirmPasswordError('Passwords do not match.');
-    } else {
-      setConfirmPasswordError('');
-    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!password || !confirmPassword) {
-      toast.error('Please fill out both password fields.');
+      toast.error('すべての項目を入力してください。');
       return;
     }
 
-    if (passwordError || confirmPasswordError) {
-      toast.error('Please resolve the errors before submitting.');
+    if (!isPasswordValid) {
+      toast.error('パスワードは必要な条件を満たしていません。');
       return;
     }
 
-    
+    if (!isConfirmPasswordValid) {
+      toast.error('パスワードが一致しません。');
+      return;
+    }
+
+    setIsLoading(true);
+
     setTimeout(() => {
-      toast.success('Password changed successfully!');
+      setIsLoading(false);
+      toast.success('パスワードのリセットに成功しました！リダイレクト中...');
       setTimeout(() => {
-        navigate('/'); 
+        navigate('/');
       }, 1500);
-    }, 2000);
+    }, 1000);
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-[#F8F5F0]">
+    <div className="flex items-center justify-center min-h-screen bg-[#F8F5F0]">
       <div className="w-full max-w-md p-8 space-y-4 bg-[#F8F5F0]">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Reset Password</h2>
+        <h2 className="text-4xl text-center text-gray-800">新しいパスワードを設定</h2>
         <form onSubmit={handleSubmit}>
-          {/* Password Field */}
           <div className="mb-4">
             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700">
-              Password
+              新しいパスワード
             </label>
-            <div
-              className={`flex items-center px-4 border ${
-                passwordError ? 'border-red-500' : 'border-gray-300'
-              } rounded-lg focus-within:ring-2 focus-within:ring-[#FF9500] focus-within:border-transparent bg-white`}
-            >
-              <input
-                type={isVisible ? 'text' : 'password'}
-                id="password"
-                
-                className="flex-grow bg-transparent focus:outline-none placeholder-gray-500"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-              <button
-                type="button"
-                className="p-2 focus:outline-none"
-                onClick={() => setIsVisible(!isVisible)}
-                aria-label={isVisible ? 'Hide password' : 'Show password'}
-              >
-                {isVisible ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i>}
-              </button>
-            </div>
-            {passwordError && <p className="text-sm text-red-500">{passwordError}</p>}
+            <input
+              type="password"
+              id="password"
+              onChange={handlePasswordChange}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF9500] ${
+                !isPasswordValid ? 'border-red-500 focus:ring-2' : 'border-gray-300'
+              }`}
+              placeholder="新しいパスワードを入力"
+            />
+            {!isPasswordValid && (
+              <p className="text-sm text-red-500">
+                パスワードは最低6文字で、大文字、小文字、数字、特殊文字を含める必要があります。
+              </p>
+            )}
           </div>
 
-          
           <div className="mb-4">
-            <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-700">
-              Confirm Password
+            <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-700">
+              パスワードを確認
             </label>
-            <div
-              className={`flex items-center px-4 border ${
-                confirmPasswordError ? 'border-red-500' : 'border-gray-300'
-              } rounded-lg focus-within:ring-2 focus-within:ring-[#FF9500] focus-within:border-transparent bg-white`}
-            >
-              <input
-                type={cpassIsVisible ? 'text' : 'password'}
-                id="confirm-password"
-                
-                className="flex-grow bg-transparent focus:outline-none placeholder-gray-500"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-              />
-              <button
-                type="button"
-                className="p-2 focus:outline-none"
-                onClick={() => setCpassIsVisible(!cpassIsVisible)}
-                aria-label={cpassIsVisible ? 'Hide password' : 'Show password'}
-              >
-                {cpassIsVisible ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i>}
-              </button>
-            </div>
-            {confirmPasswordError && <p className="text-sm text-red-500">{confirmPasswordError}</p>}
+            <input
+              type="password"
+              id="confirmPassword"
+              onChange={handleConfirmPasswordChange}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF9500] ${
+                !isConfirmPasswordValid ? 'border-red-500 focus:ring-2' : 'border-gray-300'
+              }`}
+              placeholder="もう一度パスワードを入力"
+            />
+            {!isConfirmPasswordValid && (
+              <p className="text-sm text-red-500">パスワードが一致しません。</p>
+            )}
           </div>
 
-          
           <button
             type="submit"
-            className="w-full px-4 py-2 mt-4 text-white bg-[#FF9500] rounded-2xl hover:bg-[#ff9500df]"
+            disabled={isLoading}
+            className={`relative w-full px-4 py-2 mt-4 text-white rounded-lg ${
+              isLoading ? 'bg-[#FF9500] cursor-not-allowed' : 'bg-[#FF9500] hover:bg-[#ff9500df]'
+            }`}
           >
-            Submit
+            <div className="flex items-center justify-center">
+              {isLoading ? (
+                <span className="loader w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
+              ) : (
+                'パスワードをリセット'
+              )}
+            </div>
           </button>
         </form>
       </div>
-      <ToastContainer position="bottom-center" autoClose={3000} />
+      <ToastContainer position="bottom-center" autoClose={2000} />
     </div>
   );
 };

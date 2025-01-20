@@ -13,21 +13,18 @@ const Register = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isUsernameValid, setIsUsernameValid] = useState(true);
 
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
-  // Email Validation
   const validateEmail = (value) => {
     const regex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
     return regex.test(value);
   };
 
-  // Password Validation
   const validatePassword = (value) => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
     return regex.test(value);
   };
 
-  // username validation
   const validateUsername = (value) => {
     return value.trim().length > 0;
   };
@@ -65,7 +62,6 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if all fields are valid
     if (!isUsernameValid || !isEmailValid || !isPasswordValid) {
       toast.error("Please fill the form");
       return;
@@ -73,21 +69,19 @@ const Register = () => {
 
     toast.success("Registration successful!");
 
-    // Redirect to login page after a short delay
     setTimeout(() => {
       navigate('/');
-    }, 2000); // 2 seconds delay before redirection
+    }, 2000); 
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#F8F5F0]">
       <div className="w-full max-w-md p-8 space-y-4 bg-[#F8F5F0]">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Register</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800">登録</h2>
         <form onSubmit={handleSubmit}>
-          {/* Username section */}
           <div className="mb-4">
             <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-700">
-              Username
+              ユーザー名
             </label>
             <input
               type="text"
@@ -95,14 +89,12 @@ const Register = () => {
               value={username}
               onChange={handleUsernameChange}
               className={`w-full px-4 py-2 border ${!isUsernameValid ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF9500]`}
-              
             />
-            {!isUsernameValid && <p className="text-sm text-red-500">Username is required.</p>}
+            {!isUsernameValid && <p className="text-sm text-red-500">ユーザー名が必要です。</p>}
           </div>
-          {/* Email section */}
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
-              Email
+              メール
             </label>
             <input
               type="email"
@@ -110,15 +102,12 @@ const Register = () => {
               value={email}
               onChange={handleEmailChange}
               className={`w-full px-4 py-2 border ${!isEmailValid ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF9500]`}
-              
             />
-            {!isEmailValid && <p className="text-sm text-red-500">Please enter a valid email address.</p>}
+            {!isEmailValid && <p className="text-sm text-red-500">有効なメールアドレスを入力してください。</p>}
           </div>
-
-          {/* Password section */}
           <div className="mb-4">
             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700">
-              Password
+              パスワード
             </label>
             <div className="flex items-center px-4 border rounded-lg focus-within:ring-2 focus-within:ring-[#FF9500] focus-within:border-transparent bg-white">
               <input
@@ -127,7 +116,6 @@ const Register = () => {
                 onChange={handlePasswordChange}
                 className={`flex-grow bg-transparent focus:outline-none placeholder-gray-500 ${!isPasswordValid ? 'border-red-500' : 'border-gray-300'}`}
                 id="password"
-                
               />
               <button
                 type="button"
@@ -140,20 +128,18 @@ const Register = () => {
             </div>
             {!isPasswordValid && (
               <p className="text-sm text-red-500">
-                Password must be at least 6 characters long, contain both uppercase and lowercase letters, at least one number, and one special character.
+                パスワードは少なくとも6文字以上、大文字と小文字、1つ以上の数字、1つの特殊文字を含む必要があります。
               </p>
             )}
           </div>
-
-          
           <button
             type="submit"
             className="w-full px-4 py-2 mt-4 text-white bg-[#FF9500] rounded-2xl hover:bg-[#ff9500df]"
           >
-            Register
+            登録
           </button>
           <div className="w-full text-center mt-2">
-            <Link to={'/'}> <p> Already have an account? login</p></Link>
+            <Link to={'/'}> <p> すでにアカウントをお持ちですか？ログイン</p></Link>
           </div>
         </form>
       </div>

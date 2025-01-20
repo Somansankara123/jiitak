@@ -1,13 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from "../utils.js/UserContext";
-
 
 const Login = () => {
 
-  const {setLoginResponse} = useContext(UserContext)
+  const { setLoginResponse } = useContext(UserContext);
 
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,29 +27,27 @@ const Login = () => {
     e.preventDefault();
 
     if (!email || !password) {
-      notify('Please fill in both email and password!');
+      notify('メールアドレスとパスワードの両方を入力してください。');
       return;
     }
 
     if (!isEmailValid || !isPasswordValid) {
-      toast.error('Please enter valid email and password!');
+      toast.error('有効なメールアドレスとパスワードを入力してください。');
       return;
     }
 
     setIsLoading(true);
-    sessionStorage.setItem('email',email)
+    sessionStorage.setItem('email', email);
     setTimeout(() => {
       setIsLoading(false);
-      
-      
-      toast.success('Login successful! Redirecting...');
-      
-      
+
+      toast.success('ログイン成功！リダイレクト中...');
+
       setTimeout(() => {
         navigate('/dashboard');
-      }, 2000); 
-      setLoginResponse(email)
-    }, 1000); 
+      }, 2000);
+      setLoginResponse(email);
+    }, 1000);
   };
 
   const validation = (e) => {
@@ -64,18 +61,17 @@ const Login = () => {
         !!value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/)
       );
       setPassword(value);
-      
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#F8F5F0]">
       <div className="w-full max-w-md p-8 space-y-4 bg-[#F8F5F0]">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800">ログイン</h2>
         <form>
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
-              Email
+              メールアドレス
             </label>
             <input
               type="email"
@@ -86,16 +82,15 @@ const Login = () => {
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF9500] ${
                 !isEmailValid ? 'border-red-500 focus:ring-2' : 'border-gray-300'
               }`}
-              
             />
             {!isEmailValid && (
-              <p className="text-sm text-red-500 mt-1">Please enter a valid email address.</p>
+              <p className="text-sm text-red-500 mt-1">有効なメールアドレスを入力してください。</p>
             )}
           </div>
 
           <div className="mb-4">
             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700">
-              Password
+              パスワード
             </label>
             <div
               className={`flex items-center px-4 border rounded-lg focus-within:ring-2 focus-within:ring-[#FF9500] bg-white ${
@@ -109,20 +104,19 @@ const Login = () => {
                 onChange={(e) => validation(e)}
                 className="flex-grow bg-transparent focus:outline-none placeholder-gray-500"
                 id="password"
-                
               />
               <button
                 type="button"
                 className="p-2 focus:outline-none"
                 onClick={() => setIsVisible(!isVisible)}
-                aria-label={isVisible ? 'Hide password' : 'Show password'}
+                aria-label={isVisible ? 'パスワードを非表示' : 'パスワードを表示'}
               >
                 {isVisible ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i>}
               </button>
             </div>
             {!isPasswordValid && (
               <p className="text-sm text-red-500 mt-1">
-                Password must be at least 6 characters long, contain both uppercase and lowercase letters, at least one number, and one special character.
+                パスワードは6文字以上で、大文字、小文字、数字、特殊文字を含める必要があります。
               </p>
             )}
           </div>
@@ -138,20 +132,20 @@ const Login = () => {
               {isLoading ? (
                 <span className="loader w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
               ) : (
-                'Login'
+                'ログイン'
               )}
             </div>
           </button>
           <div className="w-full text-center mt-2">
             <Link to={'/forgotpassword'}>
-              <p>Forgot your password?</p>
+              <p>パスワードをお忘れですか？</p>
             </Link>
           </div>
         </form>
       </div>
       <ToastContainer position="bottom-center" autoClose={3000} />
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

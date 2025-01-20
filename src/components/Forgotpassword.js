@@ -23,20 +23,20 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     if (!email) {
-      toast.error('Please enter an email address.'); 
-      return
+      toast.error('メールアドレスを入力してください。'); 
+      return;
     }
 
     if (!isEmailValid) {
-      toast.error('Please enter a valid email address.'); 
-      return
+      toast.error('有効なメールアドレスを入力してください。'); 
+      return;
     }
 
     setIsLoading(true);
 
     setTimeout(() => {
       setIsLoading(false);
-      toast.success('Email sent to the specified address for resetting your password')
+      toast.success('指定されたメールアドレスにパスワードリセット用のURLを送信しました。');
       
       setTimeout(() => {
         navigate('/resetpassword');
@@ -47,15 +47,14 @@ const ForgotPassword = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#F8F5F0]">
       <div className="w-full max-w-md p-8 space-y-4 bg-[#F8F5F0]">
-        <h2 className="text-4xl text-center text-gray-800">Reset Password</h2>
+        <h2 className="text-4xl text-center text-gray-800">パスワードリセット</h2>
         <h6 className="text-center">
-          Please enter the email address you are currently using. We are sending a URL for resetting your password via email.
+          現在使用しているメールアドレスを入力してください。パスワードリセット用のURLをメールで送信します。
         </h6>
         <form onSubmit={handleSubmit}>
-          
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
-              Email
+              メールアドレス
             </label>
             <input
               type="email"
@@ -63,9 +62,9 @@ const ForgotPassword = () => {
               name="email"
               onChange={handleEmailChange}
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF9500] ${!isEmailValid ? 'border-red-500 focus:ring-2' : 'border-gray-300'}`}
-              placeholder="Enter your email"
+              placeholder="メールアドレスを入力してください"
             />
-            {!isEmailValid && <p className="text-sm text-red-500">Please enter a valid email address.</p>}
+            {!isEmailValid && <p className="text-sm text-red-500">有効なメールアドレスを入力してください。</p>}
           </div>
           <button
             type="submit"
@@ -76,12 +75,12 @@ const ForgotPassword = () => {
               {isLoading ? (
                 <span className="loader w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
               ) : (
-                'Submit'
+                '送信'
               )}
             </div>
           </button>
           <div className="w-full text-center mt-2">
-            <Link to={'/'}><p>Back to login page</p></Link>
+            <Link to={'/'}><p>ログインページに戻る</p></Link>
           </div>
         </form>
       </div>
