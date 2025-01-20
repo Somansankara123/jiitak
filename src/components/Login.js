@@ -149,7 +149,7 @@ const Login = () => {
           </div>
         </form>
       </div>
-      <ToastContainer position="bottom-center" autoClose={5000} />
+      <ToastContainer position="bottom-center" autoClose={3000} />
     </div>
   )
 }

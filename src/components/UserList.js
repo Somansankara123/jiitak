@@ -78,7 +78,7 @@ const UserList = () => {
                   <th className="text-left px-5 py-2 border-b">ニックネーム</th>
                   <th className="text-left px-5 py-2 border-b">メールアドレス</th>
                   <th className="text-left px-5 py-2 border-b">生年月</th>
-                  <th className="text-left px-5 py-2 border-b">City</th>
+                  <th className="text-left px-5 py-2 border-b">居住地</th>
                   <th className="text-left px-5 py-2 border-b">登録日</th>
                 </tr>
               </thead>
